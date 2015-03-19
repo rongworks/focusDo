@@ -10,42 +10,36 @@
     <button class="btn btn-default" ng-click="order = 'title'"><span class="glyphicon glyphicon-font"></button>
     <button class="btn btn-default" ng-click="order = 'priority'"><span class="glyphicon glyphicon-flag"></button>
     <button class="btn btn-default" ng-click="order = 'effort'"><span class="glyphicon glyphicon-time"></button>
+      <button class="btn btn-default" ng-click="order = 'fun'"><span class="glyphicon glyphicon-heart"></button>
     <button class="btn btn-default" ng-click="order = 'done'"><span class="glyphicon glyphicon-ok"></button>
   </div>
   <span class="clearfix"></span>
   <ul class="list-group">
-    <li class="list-group-item" ng-repeat="task in tasks | filter:searchInput | orderBy: order">
+    <li class="list-group-item">
+      <form class="form" ng-submit="addTask()">
+        <span class="glyphicon glyphicon-font"></span>
+        <input type="text" ng-model="newTask.title" required />
+        <span class="glyphicon glyphicon-flag">
+          <input type="number" min="1" max="5" ng-model="newTask.priority" />
+          <span class="glyphicon glyphicon-time"></span>
+          <input type="number" min="1" max="5"  ng-model="newTask.effort" />
+          <span class="glyphicon glyphicon-heart"></span>
+          <input type="number" min="1" max="5"  ng-model="newTask.fun" />
+          <button class="btn btn-link"><span class="glyphicon glyphicon-plus-sign"></span></button>
+          <span class="clearfix"></span>
+      </form>
+    </li>
+    <li class="list-group-item" ng-repeat="task in tasks | filter:searchInput | orderBy: order track by $index">
       <div>
-        <button class="pull-left" ng-click="removeTask(task.id)"><span class="glyphicon glyphicon-minus"></button>
-        <p><strong>{{task.title}}<strong></p>
+        <button class="pull-right btn btn-xs" ng-click="removeTask(task.id)"><span class="glyphicon glyphicon-trash"></span></button>
+        <p><strong>{{task.id+'# '+task.title}}<strong></p>
         <p class="pull-right"><span class="glyphicon glyphicon-flag"></span>{{task.priority}}</p>
         <p class="pull-right"><span class="glyphicon glyphicon-time"></span>{{task.effort}}</p>
+        <p class="pull-right"><span class="glyphicon glyphicon-heart"></span>{{task.fun}}</p>
         <p class="pull-right"><span ng-if="task.done" class="glyphicon glyphicon-ok"></span></p>
         <span class="clearfix"></span>
       </div>
     </li>
+
   </ul>
-  <h3>Add a new Task</h3>
-    <form name="addForm" class="form" ng-submit="addTask()">
-      <div class="form-group">
-        <label>Title</label>
-        <input type="text" class="form-control" ng-model="newTask.title" required />
-      </div>
-      <div class="form-group">
-        <label>Priority</label>
-        <input type="number" min="1" max="5" class="form-control" ng-model="newTask.priority" />
-      </div>
-      <div class="form-group">
-        <label>Effort</label>
-        <input type="number" min="1" max="5" class="form-control" ng-model="newTask.effort" />
-      </div>
-      <div class="row">
-        <div class="col-xs-6">
-          <label>Done: <input type="checkbox" ng-model="newTask.done" /></label>
-        </div>
-        <div class="col-xs-6">
-          <button class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
-        </div>
-      </div>
-    </form>
 </div>
